@@ -46,13 +46,13 @@
 
 		led-0 {
 			function = LED_FUNCTION_LAN;
-			color = <LED_COLOR_ID_AMBER>;
+			color = <LED_COLOR_ID_GREEN>;
 			gpios = <&pio 8 GPIO_ACTIVE_LOW>;
 		};
 
 		led-1 {
 			function = LED_FUNCTION_LAN;
-			color = <LED_COLOR_ID_GREEN>;
+			color = <LED_COLOR_ID_AMBER>;
 			gpios = <&pio 13 GPIO_ACTIVE_LOW>;
 		};
 
