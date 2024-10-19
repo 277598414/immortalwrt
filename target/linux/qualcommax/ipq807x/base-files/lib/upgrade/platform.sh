@@ -273,10 +273,6 @@ platform_do_upgrade() {
 		CI_ROOT_UBIPART="rootfs"
 		nand_do_upgrade "$1"
 		;;
-	zte,mf269-stock)
-		CI_UBIPART="rootfs"
-		nand_do_upgrade "$1"
-		;;
 	zyxel,nbg7815)
 		local config_mtdnum="$(find_mtd_index 0:bootconfig)"
 		[ -z "$config_mtdnum" ] && reboot
