@@ -9,8 +9,8 @@ if [ "$RADIO_NUM" -eq 0 ]; then
 fi
 
 # 默认WIFI设置
-BASE_SSID='OWRT'
-BASE_WORD='12345678'
+BASE_SSID='xiaomi'
+BASE_WORD='*#36343314'
 
 # 配置无线设备
 configure_wifi() {
