@@ -58,6 +58,7 @@ define Device/glinet_gl-axt1800
 endef
 TARGET_DEVICES += glinet_gl-axt1800
 
+
 define Device/jdc_ax1800-pro
 	$(call Device/FitImage)
 	$(call Device/EmmcImage)
