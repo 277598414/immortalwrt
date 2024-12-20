@@ -1,5 +1,3 @@
-DEVICE_VARS += NETGEAR_BOARD_ID NETGEAR_HW_ID
-
 define Build/asus-fake-ramdisk
 	rm -rf $(KDIR)/tmp/fakerd
 	dd if=/dev/zero bs=32 count=1 > $(KDIR)/tmp/fakerd
@@ -310,7 +308,7 @@ define Device/prpl_haze
 	DEVICE_DTS_CONFIG := config@hk09
 	SOC := ipq8072
 	DEVICE_PACKAGES := ath11k-firmware-qcn9074 ipq-wifi-prpl_haze kmod-ath11k-pci \
-		kmod-fs-f2fs f2fs-tools kmod-leds-lp5562
+		mkf2fs f2fsck kmod-fs-f2fs kmod-leds-lp5562
 endef
 TARGET_DEVICES += prpl_haze
 
@@ -322,7 +320,7 @@ define Device/qnap_301w
 	DEVICE_DTS_CONFIG := config@hk01
 	KERNEL_SIZE := 16384k
 	SOC := ipq8072
-	DEVICE_PACKAGES := kmod-fs-f2fs f2fs-tools ipq-wifi-qnap_301w
+	DEVICE_PACKAGES := ipq-wifi-qnap_301w
 endef
 TARGET_DEVICES += qnap_301w
 
@@ -330,20 +328,9 @@ define Device/redmi_ax6
 	$(call Device/xiaomi_ax3600)
 	DEVICE_VENDOR := Redmi
 	DEVICE_MODEL := AX6
-	DEVICE_PACKAGES := ipq-wifi-redmi_ax6 -kmod-usb3 -kmod-usb-dwc3 -kmod-usb-dwc3-qcom -automount
+	DEVICE_PACKAGES := ipq-wifi-redmi_ax6
 endef
 TARGET_DEVICES += redmi_ax6
-
-define Device/redmi_ax6-stock
-	$(call Device/redmi_ax6)
-	DEVICE_VARIANT := (stock layout)
-	DEVICE_ALT0_VENDOR := Redmi
-	DEVICE_ALT0_MODEL := AX6
-	DEVICE_ALT0_VARIANT := (custom U-Boot layout)
-	KERNEL_SIZE :=
-	ARTIFACTS :=
-endef
-TARGET_DEVICES += redmi_ax6-stock
 
 define Device/spectrum_sax1v1k
 	$(call Device/FitImage)
@@ -376,14 +363,12 @@ define Device/xiaomi_ax3600
 	$(call Device/UbiFit)
 	DEVICE_VENDOR := Xiaomi
 	DEVICE_MODEL := AX3600
-	DEVICE_VARIANT := (OpenWrt expand layout)
 	BLOCKSIZE := 128k
 	PAGESIZE := 2048
 	DEVICE_DTS_CONFIG := config@ac04
 	SOC := ipq8071
 	KERNEL_SIZE := 36608k
-	DEVICE_PACKAGES := ipq-wifi-xiaomi_ax3600 kmod-ath10k-ct-smallbuffers ath10k-firmware-qca9887-ct \
-		-kmod-usb3 -kmod-usb-dwc3 -kmod-usb-dwc3-qcom -automount
+	DEVICE_PACKAGES := ipq-wifi-xiaomi_ax3600 kmod-ath10k-ct-smallbuffers ath10k-firmware-qca9887-ct
 ifneq ($(CONFIG_TARGET_ROOTFS_INITRAMFS),)
 	ARTIFACTS := initramfs-factory.ubi
 	ARTIFACT/initramfs-factory.ubi := append-image-stage initramfs-uImage.itb | ubinize-kernel
@@ -391,23 +376,11 @@ endif
 endef
 TARGET_DEVICES += xiaomi_ax3600
 
-define Device/xiaomi_ax3600-stock
-	$(call Device/xiaomi_ax3600)
-	DEVICE_VARIANT := (stock layout)
-	DEVICE_ALT0_VENDOR := Xiaomi
-	DEVICE_ALT0_MODEL := AX3600
-	DEVICE_ALT0_VARIANT := (custom U-Boot layout)
-	KERNEL_SIZE :=
-	ARTIFACTS :=
-endef
-TARGET_DEVICES += xiaomi_ax3600-stock
-
 define Device/xiaomi_ax9000
 	$(call Device/FitImage)
 	$(call Device/UbiFit)
 	DEVICE_VENDOR := Xiaomi
 	DEVICE_MODEL := AX9000
-	DEVICE_VARIANT := (OpenWrt expand layout)
 	BLOCKSIZE := 128k
 	PAGESIZE := 2048
 	DEVICE_DTS_CONFIG := config@hk14
@@ -457,27 +430,14 @@ define Device/zte_mf269
 	$(call Device/UbiFit)
 	DEVICE_VENDOR := ZTE
 	DEVICE_MODEL := MF269
-	DEVICE_VARIANT := (OpenWrt expand layout)
 	BLOCKSIZE := 128k
 	PAGESIZE := 2048
 	DEVICE_DTS_CONFIG := config@ac04
 	SOC := ipq8071
 	KERNEL_SIZE := 53248k
 	DEVICE_PACKAGES := ipq-wifi-zte_mf269
-	DEVICE_COMPAT_VERSION := 1.1
-	DEVICE_COMPAT_MESSAGE := Partition table has changed, please flash new stock layout firmware instead
 endef
 TARGET_DEVICES += zte_mf269
-
-define Device/zte_mf269-stock
-	$(call Device/zte_mf269)
-	DEVICE_VARIANT := (stock layout)
-	DEVICE_ALT0_VENDOR := ZTE
-	DEVICE_ALT0_MODEL := MF269
-	DEVICE_ALT0_VARIANT := (custom U-Boot layout)
-	KERNEL_SIZE :=
-endef
-TARGET_DEVICES += zte_mf269-stock
 
 define Device/zyxel_nbg7815
 	$(call Device/FitImage)
@@ -486,7 +446,7 @@ define Device/zyxel_nbg7815
 	DEVICE_MODEL := NBG7815
 	DEVICE_DTS_CONFIG := config@nbg7815
 	SOC := ipq8074
-	DEVICE_PACKAGES := kmod-fs-f2fs f2fs-tools ipq-wifi-zyxel_nbg7815 kmod-ath11k-pci \
+	DEVICE_PACKAGES := ipq-wifi-zyxel_nbg7815 kmod-ath11k-pci \
 		kmod-bluetooth kmod-hwmon-tmp103
 endef
 TARGET_DEVICES += zyxel_nbg7815

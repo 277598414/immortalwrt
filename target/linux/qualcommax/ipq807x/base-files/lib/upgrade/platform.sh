@@ -185,9 +185,12 @@ platform_do_upgrade() {
 		;;
 	prpl,haze|\
 	qnap,301w)
-		CI_KERNPART="0:HLOS"
-		CI_ROOTPART="rootfs"
-		emmc_do_upgrade "$1"
+		kernelname="0:HLOS"
+		rootfsname="rootfs"
+		mmc_do_upgrade "$1"
+		;;
+	tplink,eap660hd-v1)
+		tplink_do_upgrade "$1"
 		;;
 	redmi,ax6|\
 	xiaomi,ax3600|\
@@ -208,41 +211,11 @@ platform_do_upgrade() {
 		CI_ROOT_UBIPART="rootfs"
 		nand_do_upgrade "$1"
 		;;
-	redmi,ax6-stock|\
-	xiaomi,ax3600-stock)
-		part_num="$(fw_printenv -n flag_boot_rootfs)"
-		if [ "$part_num" -eq "1" ]; then
-			CI_UBIPART="rootfs_1"
-			target_num=1
-			# Reset fail flag for the current partition
-			# With both partition set to fail, the partition 2 (bit 1)
-			# is loaded
-			fw_setenv flag_try_sys2_failed 0
-		else
-			CI_UBIPART="rootfs"
-			target_num=0
-			# Reset fail flag for the current partition
-			# or uboot will skip the loading of this partition
-			fw_setenv flag_try_sys1_failed 0
-		fi
-
-		# Tell uboot to switch partition
-		fw_setenv flag_boot_rootfs "$target_num"
-		fw_setenv flag_last_success "$target_num"
-
-		# Reset success flag
-		fw_setenv flag_boot_success 0
-
-		nand_do_upgrade "$1"
-		;;
 	spectrum,sax1v1k)
 		CI_KERNPART="0:HLOS"
 		CI_ROOTPART="rootfs"
 		CI_DATAPART="rootfs_data"
 		emmc_do_upgrade "$1"
-		;;
-	tplink,eap660hd-v1)
-		tplink_do_upgrade "$1"
 		;;
 	yuncore,ax880)
 		active="$(fw_printenv -n active)"
@@ -273,22 +246,19 @@ platform_do_upgrade() {
 		CI_ROOT_UBIPART="rootfs"
 		nand_do_upgrade "$1"
 		;;
-	zte,mf269-stock)
-		CI_UBIPART="rootfs"
-		nand_do_upgrade "$1"
-		;;
 	zyxel,nbg7815)
 		local config_mtdnum="$(find_mtd_index 0:bootconfig)"
 		[ -z "$config_mtdnum" ] && reboot
 		part_num="$(hexdump -e '1/1 "%01x|"' -n 1 -s 168 -C /dev/mtd$config_mtdnum | cut -f 1 -d "|" | head -n1)"
 		if [ "$part_num" -eq "0" ]; then
-			CI_KERNPART="0:HLOS"
-			CI_ROOTPART="rootfs"
+			kernelname="0:HLOS"
+			rootfsname="rootfs"
+			mmc_do_upgrade "$1"
 		else
-			CI_KERNPART="0:HLOS_1"
-			CI_ROOTPART="rootfs_1"
+			kernelname="0:HLOS_1"
+			rootfsname="rootfs_1"
+			mmc_do_upgrade "$1"
 		fi
-		emmc_do_upgrade "$1"
 		;;
 	*)
 		default_do_upgrade "$1"
@@ -298,10 +268,7 @@ platform_do_upgrade() {
 
 platform_copy_config() {
 	case "$(board_name)" in
-	prpl,haze|\
-	qnap,301w|\
-	spectrum,sax1v1k|\
-	zyxel,nbg7815)
+	spectrum,sax1v1k)
 		emmc_copy_config
 		;;
 	esac
