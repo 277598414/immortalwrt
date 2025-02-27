@@ -2,7 +2,7 @@
 . /usr/share/libubox/jshn.sh
 
 # 默认WIFI设置
-BASE_SSID='OWRT'
+BASE_SSID='ImmortalWrt'
 BASE_WORD='12345678'
 BASE_POWER='auto'
 
