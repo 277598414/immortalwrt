@@ -1,3 +1,17 @@
+define Device/glinet_gl-b3000
+  $(call Device/FitImage)
+  $(call Device/UbiFit)
+  SOC := ipq5000
+  DEVICE_VENDOR := GL.iNET
+  DEVICE_MODEL := GL-B3000
+  BLOCKSIZE := 128k
+  PAGESIZE := 2048
+  DEVICE_DTS_CONFIG := config@mp03.5-c1
+  UBINIZE_OPTS := -E 5
+  DEVICE_PACKAGES := ath11k-firmware-qcn6122 ipq-wifi-glinet_gl-b3000
+endef
+TARGET_DEVICES += glinet_gl-b3000
+
 define Device/linksys_ipq50xx_mx_base
 	$(call Device/FitImageLzma)
 	DEVICE_VENDOR := Linksys
@@ -10,17 +24,6 @@ define Device/linksys_ipq50xx_mx_base
 	IMAGES += factory.bin
 	IMAGE/factory.bin := append-kernel | pad-to $$$$(KERNEL_SIZE) | append-ubi | linksys-image type=$$$$(DEVICE_MODEL)
 endef
-
-define Device/linksys_mr5500
-	$(call Device/linksys_ipq50xx_mx_base)
-	DEVICE_MODEL := MR5500
-	DEVICE_DTS_CONFIG := config@mp03.1
-	DEVICE_PACKAGES := kmod-ath11k-pci \
-		ath11k-firmware-qcn9074 \
-		ipq-wifi-linksys_mr5500 \
-		kmod-usb-ledtrig-usbport
-endef
-TARGET_DEVICES += linksys_mr5500
 
 define Device/linksys_mx2000
 	$(call Device/linksys_ipq50xx_mx_base)
@@ -40,13 +43,3 @@ define Device/linksys_mx5500
 		ipq-wifi-linksys_mx5500
 endef
 TARGET_DEVICES += linksys_mx5500
-
-define Device/linksys_spnmx56
-	$(call Device/linksys_ipq50xx_mx_base)
-	DEVICE_MODEL := SPNMX56
-	DEVICE_DTS_CONFIG := config@mp03.1
-	DEVICE_PACKAGES := kmod-ath11k-pci \
-		ath11k-firmware-qcn9074 \
-		ipq-wifi-linksys_spnmx56
-endef
-TARGET_DEVICES += linksys_spnmx56
