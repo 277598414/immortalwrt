@@ -51,7 +51,7 @@ define Device/jdc_ax1800-pro
 	DEVICE_DTS := ipq6000-jdc-ax1800-pro
 	SOC := ipq6000
 	DEVICE_PACKAGES := ipq-wifi-jdc_ax1800-pro kmod-fs-ext4 mkf2fs f2fsck kmod-fs-f2fs
-	BLOCKSIZE := 128k
+	BLOCKSIZE := 64k
 	KERNEL_SIZE := 6144k
 	IMAGES += kernel.bin rootfs.bin factory.bin
 	IMAGE/kernel.bin := append-kernel
