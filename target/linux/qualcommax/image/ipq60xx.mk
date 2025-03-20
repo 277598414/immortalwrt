@@ -13,6 +13,12 @@ TARGET_DEVICES += 8devices_mango-dvk
 
 define Device/EmmcImage
 	IMAGES += factory.bin sysupgrade.bin
+	IMAGE/factory.bin := append-kernel | pad-to 6144k | append-rootfs | append-metadata
+	IMAGE/sysupgrade.bin/squashfs := append-rootfs | pad-to 64k | sysupgrade-tar rootfs=$$$$@ | append-metadata
+endef
+
+define Device/EmmcImage
+	IMAGES += factory.bin sysupgrade.bin
 	IMAGE/factory.bin := append-rootfs | pad-rootfs | pad-to 64k
 	IMAGE/sysupgrade.bin/squashfs := append-rootfs | pad-to 64k | sysupgrade-tar rootfs=$$$$@ | append-metadata
 endef
