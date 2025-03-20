@@ -17,12 +17,6 @@ define Device/8devices_mango-dvk
 endef
 TARGET_DEVICES += 8devices_mango-dvk
 
-define Device/EmmcImage
-	IMAGES += factory.bin sysupgrade.bin
-	IMAGE/factory.bin := append-kernel | pad-to 6144k | append-rootfs | append-metadata
-	IMAGE/sysupgrade.bin/squashfs := append-rootfs | pad-to 64k | sysupgrade-tar rootfs=$$$$@ | append-metadata
-endef
-
 define Device/cambiumnetworks_xe3-4
 	$(call Device/FitImage)
 	$(call Device/UbiFit)
