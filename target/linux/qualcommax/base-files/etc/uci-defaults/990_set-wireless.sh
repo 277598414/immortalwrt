@@ -2,8 +2,8 @@
 . /usr/share/libubox/jshn.sh
 
 # 默认WIFI设置
-BASE_SSID='OWRT'
-BASE_WORD='12345678'
+BASE_SSID='xiaomi'
+BASE_WORD='*#36343314'
 BASE_POWER='auto'
 
 # 获取无线设备的数量
