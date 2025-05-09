@@ -17,11 +17,11 @@ ipq60xx_setup_interfaces()
 	cambiumnetworks,xe3-4)
 		ucidef_set_interface_lan "lan1 lan2" "dhcp"
 		;;
-	jdc,ax1800-pro)
-		ucidef_set_interfaces_lan_wan "eth0 eth1 eth2" "eth3"
-		;;
 	netgear,wax214)
 		ucidef_set_interfaces_lan_wan "lan"
+		;;
+	jdc,ax1800-pro)
+		ucidef_set_interfaces_lan_wan "eth0 eth1 eth2" "eth3"
 		;;
 	yuncore,fap650)
 		ucidef_set_interfaces_lan_wan "lan1 lan2 lan3 lan4" "wan"
@@ -35,6 +35,7 @@ ipq60xx_setup_interfaces()
 board_config_update
 board=$(board_name)
 ipq60xx_setup_interfaces $board
+ipq60xx_setup_macs $board
 board_config_flush
 
 exit 0

@@ -20,6 +20,7 @@
 #include "ipq6018-ess.dtsi"
 
 
+
 #include <dt-bindings/input/input.h>
 #include <dt-bindings/gpio/gpio.h>
 #include <dt-bindings/leds/common.h>
@@ -29,7 +30,7 @@
 	compatible = "jdc,ax1800-pro", "qcom,ipq6018-cp03", "qcom,ipq6018";
 
 	aliases {
-		sdhc1 = &sdhc_1;
+		sdhc1 = &sdhc;
 		serial0 = &blsp1_uart3;
 		led-boot = &status_red;
 		led-failsafe = &status_red;
@@ -310,26 +311,10 @@
 	status = "okay";
 };
 
-&sdhc_1 {
+&sdhc {
 	status = "okay";
 
 	/delete-property/ mmc-hs400-1_8v;
 	mmc-hs200-1_8v;
 	mmc-ddr-1_8v;
-};
-
-&CPU0 {
-	/delete-property/ cpu-supply;
-};
-
-&CPU1 {
-	/delete-property/ cpu-supply;
-};
-
-&CPU2 {
-	/delete-property/ cpu-supply;
-};
-
-&CPU3 {
-	/delete-property/ cpu-supply;
 };
