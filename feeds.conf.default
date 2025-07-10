@@ -8,4 +8,3 @@ src-git video https://github.com/openwrt/video.git
 #src-link custom /usr/src/openwrt/custom-feed
 src-git nikki https://github.com/nikkinikki-org/OpenWrt-nikki.git;main
 src-git gecoosac https://github.com/lwb1978/openwrt-gecoosac.git;main
-src-git mosdns https://github.com/sbwml/luci-app-mosdns.git;v5
