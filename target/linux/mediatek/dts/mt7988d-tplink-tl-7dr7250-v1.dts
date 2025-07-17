@@ -32,8 +32,20 @@
 	status = "disabled";
 };
 
-&i2p5gbe_led0 {
-	function = LED_FUNCTION_LAN;
+&gsw_port0 {
+	label = "lan2";
+};
+
+&gsw_port1 {
+	label = "lan1";
+};
+
+&gsw_port2 {
+	status = "disabled";
+};
+
+&gsw_port3 {
+	status = "disabled";
 };
 
 &mdio_bus {
@@ -54,26 +66,6 @@
 				function = LED_FUNCTION_WAN;
 				color = <LED_COLOR_ID_GREEN>;
 			};
-		};
-	};
-};
-
-&switch {
-	ports {
-		port@0 {
-			label = "lan2";
-		};
-
-		port@1 {
-			label = "lan1";
-		};
-
-		port@2 {
-			status = "disabled";
-		};
-
-		port@3 {
-			status = "disabled";
 		};
 	};
 };
