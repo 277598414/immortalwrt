@@ -4,8 +4,12 @@
 #include "rtl8380_zyxel_gs1900_gpio.dtsi"
 
 / {
-	compatible = "zyxel,gs1900-24hp-v2", "realtek,rtl838x-soc";
-	model = "Zyxel GS1900-24HP v2 Switch";
+	compatible = "zyxel,gs1900-24-a1", "realtek,rtl838x-soc";
+	model = "Zyxel GS1900-24 A1";
+
+	memory@0 {
+		reg = <0x0 0x4000000>;
+	};
 
 	/* i2c of the left SFP cage: port 25 */
 	i2c0: i2c-gpio-0 {
@@ -102,10 +106,10 @@
 		SWITCH_PORT(22, 23, qsgmii)
 		SWITCH_PORT(23, 24, qsgmii)
 
-
 		port@24 {
 			reg = <24>;
 			label = "lan25";
+			pcs-handle = <&serdes4>;
 			phy-mode = "1000base-x";
 			managed = "in-band-status";
 			sfp = <&sfp0>;
@@ -114,9 +118,14 @@
 		port@26 {
 			reg = <26>;
 			label = "lan26";
+			pcs-handle = <&serdes5>;
 			phy-mode = "1000base-x";
 			managed = "in-band-status";
 			sfp = <&sfp1>;
 		};
 	};
+};
+
+&gpio1 {
+	/delete-node/ poe_enable;
 };
