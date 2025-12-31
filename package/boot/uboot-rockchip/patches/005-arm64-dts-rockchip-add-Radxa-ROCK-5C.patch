@@ -1,7 +1,7 @@
-From 3ddf5cdb77e6efd6fe9b70f36dec935e324a3cd2 Mon Sep 17 00:00:00 2001
+From a0dd3480a7dc028b23ab640eacb652c5b0cf2b77 Mon Sep 17 00:00:00 2001
 From: FUKAUMI Naoki <naoki@radxa.com>
-Date: Mon, 21 Oct 2024 09:05:47 +0000
-Subject: arm64: dts: rockchip: add Radxa ROCK 5C
+Date: Sat, 4 Jan 2025 01:57:03 +0000
+Subject: [PATCH] arm64: dts: rockchip: add Radxa ROCK 5C
 
 Radxa ROCK 5C is a 8K computer for everything[1] using the Rockchip
 RK3588S2 chip:
@@ -25,17 +25,18 @@ Signed-off-by: FUKAUMI Naoki <naoki@radxa.com>
 Link: https://lore.kernel.org/r/20241021090548.1052-2-naoki@radxa.com
 Signed-off-by: Heiko Stuebner <heiko@sntech.de>
 
---- a/arch/arm64/boot/dts/rockchip/Makefile
-+++ b/arch/arm64/boot/dts/rockchip/Makefile
-@@ -119,4 +119,5 @@ dtb-$(CONFIG_ARCH_ROCKCHIP) += rk3588-ro
- dtb-$(CONFIG_ARCH_ROCKCHIP) += rk3588s-indiedroid-nova.dtb
- dtb-$(CONFIG_ARCH_ROCKCHIP) += rk3588s-khadas-edge2.dtb
- dtb-$(CONFIG_ARCH_ROCKCHIP) += rk3588s-rock-5a.dtb
-+dtb-$(CONFIG_ARCH_ROCKCHIP) += rk3588s-rock-5c.dtb
- dtb-$(CONFIG_ARCH_ROCKCHIP) += rk3588s-orangepi-5.dtb
+[ upstream commit: 3ddf5cdb77e6efd6fe9b70f36dec935e324a3cd2 ]
+
+(cherry picked from commit f80689fcef4b9b07a97b629b4075cc1a4c21a68e)
+Reviewed-by: Kever Yang <kever.yang@rock-chips.com>
+---
+ .../src/arm64/rockchip/rk3588s-rock-5c.dts    | 920 ++++++++++++++++++
+ 1 file changed, 920 insertions(+)
+ create mode 100644 dts/upstream/src/arm64/rockchip/rk3588s-rock-5c.dts
+
 --- /dev/null
-+++ b/arch/arm64/boot/dts/rockchip/rk3588s-rock-5c.dts
-@@ -0,0 +1,920 @@
++++ b/dts/upstream/src/arm64/rockchip/rk3588s-rock-5c.dts
+@@ -0,0 +1,881 @@
 +// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
 +/*
 + * Copyright (c) 2024 Radxa Computer (Shenzhen) Co., Ltd.
@@ -72,17 +73,6 @@ Signed-off-by: Heiko Stuebner <heiko@sntech.de>
 +			  "Headphones", "HPOR";
 +		widgets = "Microphone", "Mic Jack",
 +			  "Headphone", "Headphones";
-+	};
-+
-+	hdmi0-con {
-+		compatible = "hdmi-connector";
-+		type = "a";
-+
-+		port {
-+			hdmi0_con_in: endpoint {
-+				remote-endpoint = <&hdmi0_out_con>;
-+			};
-+		};
 +	};
 +
 +	leds {
@@ -293,27 +283,6 @@ Signed-off-by: Heiko Stuebner <heiko@sntech.de>
 +&gpu {
 +	mali-supply = <&vdd_gpu_s0>;
 +	status = "okay";
-+};
-+
-+&hdmi0 {
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&hdmim0_tx0_cec
-+		     &hdmim1_tx0_hpd
-+		     &hdmim0_tx0_scl
-+		     &hdmim0_tx0_sda>;
-+	status = "okay";
-+};
-+
-+&hdmi0_in {
-+	hdmi0_in_vp0: endpoint {
-+		remote-endpoint = <&vp0_out_hdmi0>;
-+	};
-+};
-+
-+&hdmi0_out {
-+	hdmi0_out_con: endpoint {
-+		remote-endpoint = <&hdmi0_con_in>;
-+	};
 +};
 +
 +&hdptxphy_hdmi0 {
@@ -948,11 +917,4 @@ Signed-off-by: Heiko Stuebner <heiko@sntech.de>
 +
 +&vop {
 +	status = "okay";
-+};
-+
-+&vp0 {
-+	vp0_out_hdmi0: endpoint@ROCKCHIP_VOP2_EP_HDMI0 {
-+		reg = <ROCKCHIP_VOP2_EP_HDMI0>;
-+		remote-endpoint = <&hdmi0_in_vp0>;
-+	};
 +};
